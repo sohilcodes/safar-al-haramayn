@@ -1,29 +1,32 @@
 import { supabase } from "./supabase";
 
-export async function getPackages() {
-  const { data, error } = await supabase
+export async function getPackages(filters?: {
+  city?: string;
+  type?: string;
+  search?: string;
+}) {
+  let query = supabase
     .from("packages")
     .select("*")
     .eq("is_active", true);
 
-  if (error) {
-    console.error(error);
-    return [];
+  if (filters?.city) {
+    query = query.eq("departure_city", filters.city);
   }
 
-  return data;
-}
+  if (filters?.type) {
+    query = query.eq("type", filters.type);
+  }
 
-export async function getPackageById(id: string) {
-  const { data, error } = await supabase
-    .from("packages")
-    .select("*")
-    .eq("id", id)
-    .single();
+  if (filters?.search) {
+    query = query.ilike("title", `%${filters.search}%`);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
-    console.error(error);
-    return null;
+    console.log(error);
+    return [];
   }
 
   return data;
