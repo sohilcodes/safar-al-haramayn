@@ -1,33 +1,26 @@
 import { supabase } from "./supabase";
 
-export async function getPackages(filters?: {
-  city?: string;
-  type?: string;
-  search?: string;
-}) {
-  let query = supabase
+export async function getLatestPackages(limit = 3) {
+  const { data, error } = await supabase
     .from("packages")
     .select("*")
-    .eq("is_active", true);
+    .eq("is_active", true)
+    .order("created_at", { ascending: false })
+    .limit(limit);
 
-  if (filters?.city) {
-    query = query.eq("departure_city", filters.city);
-  }
+  if (error) return [];
+  return data;
+}
 
-  if (filters?.type) {
-    query = query.eq("type", filters.type);
-  }
+export async function getPackagesByType(type: string, limit = 3) {
+  const { data, error } = await supabase
+    .from("packages")
+    .select("*")
+    .eq("is_active", true)
+    .eq("type", type)
+    .order("created_at", { ascending: false })
+    .limit(limit);
 
-  if (filters?.search) {
-    query = query.ilike("title", `%${filters.search}%`);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.log(error);
-    return [];
-  }
-
+  if (error) return [];
   return data;
 }
