@@ -1,26 +1,23 @@
-import { supabase } from "./supabase";
-
-export async function getLatestPackages(limit = 3) {
+export async function getPackages() {
   const { data, error } = await supabase
     .from("packages")
     .select("*")
     .eq("is_active", true)
-    .order("created_at", { ascending: false })
-    .limit(limit);
+    .order("created_at", { ascending: false });
 
   if (error) return [];
+
   return data;
 }
 
-export async function getPackagesByType(type: string, limit = 3) {
+export async function getPackageById(id: string) {
   const { data, error } = await supabase
     .from("packages")
     .select("*")
-    .eq("is_active", true)
-    .eq("type", type)
-    .order("created_at", { ascending: false })
-    .limit(limit);
+    .eq("id", id)
+    .single();
 
-  if (error) return [];
+  if (error) return null;
+
   return data;
 }
