@@ -1,13 +1,15 @@
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     city?: string;
     month?: string;
-  };
+  }>;
 }
 
-export default function GetPackagesPage({
+export default async function GetPackagesPage({
   searchParams,
 }: Props) {
+  const params = await searchParams;
+
   return (
     <main className="container mx-auto px-4 py-20">
       <h1 className="text-4xl font-bold mb-6">
@@ -15,11 +17,11 @@ export default function GetPackagesPage({
       </h1>
 
       <p>
-        City: {searchParams.city || "All"}
+        City: {params.city || "All"}
       </p>
 
       <p>
-        Month: {searchParams.month || "All"}
+        Month: {params.month || "All"}
       </p>
     </main>
   );
