@@ -1,25 +1,17 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import Packages from "@/components/Packages";
-import About from "@/components/About";
-import Testimonials from "@/components/Testimonials";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import WhatsappButton from "@/components/WhatsappButton";
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <Packages />
-      <About />
-      <Testimonials />
-      <Contact />
-      <Footer />
+    <main className="min-h-screen">
+      <section className="bg-[#0B6B3A] text-white py-24">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-5xl font-bold">
+            Safar Al-Haramayn
+          </h1>
 
-      {/* Floating WhatsApp Button */}
-      <WhatsappButton />
-    </>
+          <p className="mt-4 text-xl">
+            Book. Budget. Be Blessed.
+          </p>
+        </div>
+      </section>
+    </main>
   );
 }
