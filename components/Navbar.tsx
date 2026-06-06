@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -20,7 +19,6 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="container mx-auto px-4">
         <div className="h-20 flex items-center justify-between">
-
           <Link href="/">
             <div>
               <h1 className="font-bold text-2xl text-[#0B6B3A]">
@@ -53,10 +51,10 @@ export default function Navbar() {
           </Link>
 
           <button
-            className="lg:hidden"
+            className="lg:hidden text-2xl"
             onClick={() => setOpen(!open)}
           >
-            {open ? <X /> : <Menu />}
+            {open ? "✕" : "☰"}
           </button>
         </div>
 
@@ -67,6 +65,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className="block"
+                onClick={() => setOpen(false)}
               >
                 {link.name}
               </Link>
@@ -76,4 +75,4 @@ export default function Navbar() {
       </div>
     </header>
   );
-}
+      }
