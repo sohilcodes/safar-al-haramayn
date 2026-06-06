@@ -1,43 +1,37 @@
 import { getPackageById } from "@/lib/packages";
+import BookingForm from "@/components/BookingForm";
 import { notFound } from "next/navigation";
-
-interface Props {
-  params: {
-    id: string;
-  };
-}
 
 export default async function PackageDetailsPage({
   params,
-}: Props) {
+}: {
+  params: { id: string };
+}) {
   const pkg = await getPackageById(params.id);
 
-  if (!pkg) {
-    notFound();
-  }
+  if (!pkg) return notFound();
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-20">
+    <main className="max-w-5xl mx-auto px-4 py-20">
 
-      <h1 className="text-5xl font-bold">
+      <h1 className="text-4xl font-bold">
         {pkg.title}
       </h1>
 
-      <p className="mt-4 text-xl">
-        {pkg.departure_city}
+      <p className="text-gray-600 mt-2">
+        {pkg.departure_city} • {pkg.duration}
       </p>
 
-      <p className="mt-2">
-        {pkg.duration}
-      </p>
-
-      <div className="mt-8 text-4xl font-bold text-[#0B6B3A]">
+      <p className="text-3xl font-bold text-[#0B6B3A] mt-4">
         ₹{pkg.price.toLocaleString()}
-      </div>
+      </p>
 
-      <p className="mt-8 text-gray-700">
+      <p className="mt-6 text-gray-700">
         {pkg.description}
       </p>
+
+      {/* Booking Form */}
+      <BookingForm packageId={pkg.id} />
 
     </main>
   );
